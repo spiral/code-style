@@ -1,5 +1,9 @@
 # Codestyle presets for Spiral repositories
 
+[![Latest Stable Version](https://poser.pugx.org/spiral/code-style/version)](https://packagist.org/packages/spiral/code-style)
+[![Build Status](https://travis-ci.org/spiral/code-style.svg?branch=master)](https://travis-ci.org/spiral/code-style)
+[![Codecov](https://codecov.io/gh/spiral/code-style/branch/master/graph/badge.svg)](https://codecov.io/gh/spiral/code-style/)
+
 This repository contains ruleset for static analyses tools.
 Currently supported:
 - [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer/)
