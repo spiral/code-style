@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-
-var_dump($_SERVER);
-
 return PhpCsFixer\Config::create()
     ->setCacheFile(__DIR__ . '/.php_cs.cache')
     ->setRiskyAllowed(true)

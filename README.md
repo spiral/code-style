@@ -16,17 +16,19 @@ To apply it in your project do the following:
 #### Install the package
 
 ```
-composer require --dev spiral/cs
+composer require --dev spiral/code-style
 ``` 
 
 #### Check the code
 ```
-vendor/bin/phpcs --standard=vendor/spiral/cs/config/ruleset.xml src <directory_1> ...
+
+#vendor/bin/spiral-cs check <dir1> <dir2> <file1>....
+vendor/bin/spiral-cs check src tests
 ```
 
 #### Automatically fix the code style
 
 ```
-vendor/bin/phpcbf --standard=vendor/spiral/cs/config/ruleset.xml  src/
-vendor/bin/php-cs-fixer fix --config=vendor/spiral/cs/config/.php_cs src/
+#vendor/bin/spiral-cs fix <dir1> <dir2> <file1>....
+vendor/bin/spiral-cs fix src tests
 ```
