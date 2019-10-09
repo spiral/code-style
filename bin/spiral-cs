@@ -3,6 +3,7 @@
 
 declare(strict_types=1);
 
+
 class CodeStyleHelper
 {
     public const PACKAGE_NAME = 'code-style';
@@ -33,6 +34,7 @@ class CodeStyleHelper
             if (file_exists($file)) {
                 define('COMPOSER_AUTOLOAD', realpath($file));
                 define('VENDOR_DIR', dirname(realpath($file)));
+                define('PROJECT_ROOT', dirname(VENDOR_DIR));
                 break;
             }
         }
@@ -85,6 +87,14 @@ class CodeStyleHelper
     {
         return CONFIG_DIR . DIRECTORY_SEPARATOR . self::PHP_CS_FIXER_CONFIG_FILE;
     }
+
+    public function wrapPaths(array $paths) : array
+    {
+        array_walk($paths, function (&$path) {
+            $path = PROJECT_ROOT . DIRECTORY_SEPARATOR . $path;
+        });
+        return $paths;
+    }
 }
 
 
@@ -109,22 +119,24 @@ $codeStyleApp->addCommands([
             InputArgument::IS_ARRAY | InputArgument::REQUIRED,
             'Enumerate directories or files to check'
         )
-        ->setCode(static function (InputInterface $input, OutputInterface $output) use ($codeStyleHelper) {
+        ->setCode(function (InputInterface $input, OutputInterface $output) use ($codeStyleHelper) {
+
+            $paths = $codeStyleHelper->wrapPaths($input->getArgument('paths'));
 
             // PHPCBF call
             $_SERVER['argv'] = array_merge([
                 'placeholder',
                 '--report=code',
                 '--standard=' . $codeStyleHelper->getPhpCsConfigPath(),
-                'src',
-            ], $input->getArgument('paths'));
+            ], $paths);
 
             $runner = new Runner();
             $runner->runPHPCBF();
 
             // PHPCS-Fixer call
             $application = new PhpCsFixApplication();
-            foreach ($input->getArgument('paths') as $path) {
+            $application->setAutoExit(false);
+            foreach ($paths as $path) {
                 $_SERVER['argv'] = [
                     'placeholder',
                     'fix',
@@ -142,12 +154,12 @@ $codeStyleApp->addCommands([
             InputArgument::IS_ARRAY | InputArgument::REQUIRED,
             'Enumerate directories or files to check'
         )
-        ->setCode(static function (InputInterface $input, OutputInterface $output) use ($codeStyleHelper) {
+        ->setCode(function (InputInterface $input, OutputInterface $output) use ($codeStyleHelper) {
             $_SERVER['argv'] = array_merge([
                 'placeholder',
                 '--report=code',
                 '--standard=' . $codeStyleHelper->getPhpCsConfigPath(),
-            ], $input->getArgument('paths'));
+            ], $codeStyleHelper->wrapPaths($input->getArgument('paths')));
             $runner = new Runner();
             $exitCode = $runner->runPHPCS();
 
