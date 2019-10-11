@@ -106,17 +106,28 @@ class CodeStyleHelper
     public function normalizeEndings(array $paths)
     {
         $finder = new Symfony\Component\Finder\Finder();
-        $finder->in($paths)->files();
-
-        foreach ($finder as $file) {
-            $lines = file((string)$file);
-            foreach ($lines as &$line) {
-                $line = rtrim($line, "\n\r ");
-                unset($line);
+        foreach ($paths as $path) {
+            if (is_file($path)) {
+                $this->normalizeContent($path);
+            } else {
+                $finder->in($path);
             }
-
-            file_put_contents((string)$file, join("\n", $lines));
         }
+
+        foreach ($finder->files() as $path) {
+            $this->normalizeContent((string)$path);
+        }
+    }
+
+    private function normalizeContent(string $filename)
+    {
+        $lines = file($filename);
+        foreach ($lines as &$line) {
+            $line = rtrim($line, "\n\r ");
+            unset($line);
+        }
+
+        file_put_contents($filename, join("\n", $lines));
     }
 }
 
@@ -193,4 +204,5 @@ $codeStyleApp->addCommands([
             return $exitCode;
         }),
 ]);
+
 $codeStyleApp->run();
