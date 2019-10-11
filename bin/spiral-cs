@@ -3,11 +3,18 @@
 
 declare(strict_types=1);
 
+use PHP_CodeSniffer\Runner;
+use PhpCsFixer\Console\Application as PhpCsFixApplication;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class CodeStyleHelper
 {
-    public const PACKAGE_NAME = 'code-style';
-    public const PHP_CS_CONFIG_FILE = 'ruleset.xml';
+    public const PACKAGE_NAME             = 'code-style';
+    public const PHP_CS_CONFIG_FILE       = 'ruleset.xml';
     public const PHP_CS_FIXER_CONFIG_FILE = '.php_cs';
 
     public static function init(): self
@@ -53,16 +60,16 @@ class CodeStyleHelper
     {
         foreach (
             [
-                VENDOR_DIR . '/spiral/' . self::PACKAGE_NAME,
+                VENDOR_DIR . DIRECTORY_SEPARATOR . 'spiral' . DIRECTORY_SEPARATOR . self::PACKAGE_NAME,
                 __DIR__,
-                __DIR__ . '/..'
+                __DIR__ . DIRECTORY_SEPARATOR . '..'
             ] as $directory
         ) {
             if (
                 is_dir($directory) &&
-                is_dir($configDir = $directory . '/config') &&
-                file_exists($configDir . '/' . self::PHP_CS_FIXER_CONFIG_FILE) &&
-                file_exists($configDir . '/' . self::PHP_CS_CONFIG_FILE)
+                is_dir($configDir = $directory . DIRECTORY_SEPARATOR . 'config') &&
+                file_exists($configDir . DIRECTORY_SEPARATOR . self::PHP_CS_FIXER_CONFIG_FILE) &&
+                file_exists($configDir . DIRECTORY_SEPARATOR . self::PHP_CS_CONFIG_FILE)
             ) {
                 define('CONFIG_DIR', $configDir);
                 break;
@@ -88,27 +95,35 @@ class CodeStyleHelper
         return CONFIG_DIR . DIRECTORY_SEPARATOR . self::PHP_CS_FIXER_CONFIG_FILE;
     }
 
-    public function wrapPaths(array $paths) : array
+    public function wrapPaths(array $paths): array
     {
         array_walk($paths, function (&$path) {
             $path = PROJECT_ROOT . DIRECTORY_SEPARATOR . $path;
         });
         return $paths;
     }
-}
 
+    public function normalizeEndings(array $paths)
+    {
+        $finder = new Symfony\Component\Finder\Finder();
+        $finder->in($paths)->files();
+
+        foreach ($finder as $file) {
+            $lines = file((string)$file);
+            foreach ($lines as &$line) {
+                $line = rtrim($line, "\n\r ");
+                unset($line);
+            }
+
+            file_put_contents((string)$file, join("\n", $lines));
+        }
+    }
+}
 
 $codeStyleHelper = CodeStyleHelper::init();
 
 require COMPOSER_AUTOLOAD;
 require VENDOR_DIR . '/squizlabs/php_codesniffer/autoload.php';
-
-use Symfony\Component\Console\Application;
-use PhpCsFixer\Console\Application as PhpCsFixApplication;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use PHP_CodeSniffer\Runner;
 
 $codeStyleApp = new Application('Spiral code style application');
 $codeStyleApp->addCommands([
@@ -119,9 +134,18 @@ $codeStyleApp->addCommands([
             InputArgument::IS_ARRAY | InputArgument::REQUIRED,
             'Enumerate directories or files to check'
         )
+        ->addOption(
+            'preserve-endings',
+            'l',
+            InputOption::VALUE_NONE,
+            'Preserve original line-endings, otherwise forced into LF'
+        )
         ->setCode(function (InputInterface $input, OutputInterface $output) use ($codeStyleHelper) {
-
             $paths = $codeStyleHelper->wrapPaths($input->getArgument('paths'));
+
+            if (!$input->getOption('preserve-endings')) {
+                $codeStyleHelper->normalizeEndings($paths);
+            }
 
             // PHPCBF call
             $_SERVER['argv'] = array_merge([
