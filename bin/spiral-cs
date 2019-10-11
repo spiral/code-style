@@ -108,7 +108,7 @@ class CodeStyleHelper
         $finder = new Symfony\Component\Finder\Finder();
         foreach ($paths as $path) {
             if (is_file($path)) {
-                $this->normalizeContent($path);
+                $finder->append([$path]);
             } else {
                 $finder->in($path);
             }
