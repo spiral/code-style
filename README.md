@@ -1,5 +1,4 @@
-# Codestyle presets for Spiral repositories
-
+# Codestyle presets for Spiral components
 [![Latest Stable Version](https://poser.pugx.org/spiral/code-style/version)](https://packagist.org/packages/spiral/code-style)
 [![Build Status](https://travis-ci.org/spiral/code-style.svg?branch=master)](https://travis-ci.org/spiral/code-style)
 [![Codecov](https://codecov.io/gh/spiral/code-style/branch/master/graph/badge.svg)](https://codecov.io/gh/spiral/code-style/)
