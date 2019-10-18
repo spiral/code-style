@@ -21,6 +21,7 @@
     <filter>
         <whitelist>
             <directory>src</directory>
+            <directory>bin</directory>
         </whitelist>
     </filter>
 </phpunit>
