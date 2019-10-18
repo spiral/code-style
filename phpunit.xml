@@ -13,14 +13,14 @@
          stderr="true"
 >
     <testsuites>
-        <testsuite name="Spiral code style Module Tests">
+        <testsuite name="Spiral Code-Style">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist>
-            <directory>bin</directory>
+            <directory>bin/</directory>
         </whitelist>
     </filter>
 </phpunit>
