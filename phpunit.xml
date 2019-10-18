@@ -20,7 +20,7 @@
 
     <filter>
         <whitelist>
-            <directory>bin/</directory>
+            <directory>./bin/</directory>
         </whitelist>
     </filter>
 </phpunit>
