@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Spiral Framework. Code style fixer
+ * @license MIT
+ */
+
 declare(strict_types=1);
 
 namespace Spiral\Tests\fixtures;
