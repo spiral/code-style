@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace Spiral\Tests\fixtures;
 use PHPUnit\Framework\TestCase;
 class NotFormattedClass{private $property;
+    private $data = array();
 
     public function setUp(): void
     {

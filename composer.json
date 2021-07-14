@@ -18,6 +18,11 @@
   "bin": [
     "bin/spiral-cs"
   ],
+  "autoload": {
+    "psr-4": {
+      "Spiral\\CodeStyle\\": "src/"
+    }
+  },
   "autoload-dev": {
     "psr-4": {
       "Spiral\\Tests\\": "tests/"
