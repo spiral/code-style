@@ -14,8 +14,12 @@ class CodeStyleCheckTest extends AbstractCodeStyleTest
 {
     public function testWrongFormattedClass(): void
     {
-        $out = [];
-        exec('bin/spiral-cs check ' . $this->getRelativeFilePath(self::NOT_FORMATTED_FILE_NAME), $out);
+        $out = $this->execCommand([
+            'bin/spiral-cs',
+            'check',
+            $this->getRelativeFilePath(self::NOT_FORMATTED_FILE_NAME)
+        ]);
+
         $this->assertArrayHasKey(0, $out);
         $this->assertGreaterThan(1, count($out));
         $this->assertNotSame($out[0], 'No codestyle issues');
@@ -23,8 +27,13 @@ class CodeStyleCheckTest extends AbstractCodeStyleTest
 
     public function testWellFormattedClass(): void
     {
-        $out = [];
-        exec($command = 'bin/spiral-cs check ' . $this->getRelativeFilePath(self::FORMATTED_FILE_NAME), $out);
+
+        $out = $this->execCommand([
+            'bin/spiral-cs',
+            'check',
+            $this->getRelativeFilePath(self::FORMATTED_FILE_NAME)
+        ]);
+
         $this->assertArrayHasKey(0, $out);
         $this->assertEquals($out[0], 'No codestyle issues');
     }

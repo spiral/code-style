@@ -15,6 +15,7 @@ abstract class AbstractCodeStyleTest extends TestCase
     protected $notFormattedClassFilePath;
 
     protected $tempDir = __DIR__ . '/../fixtures/temp/';
+
     public function setUp(): void
     {
         copy(
@@ -32,8 +33,7 @@ abstract class AbstractCodeStyleTest extends TestCase
 
     protected function tearDown(): void
     {
-        unlink($this->notFormattedClassFilePath);
-        unlink($this->formattedClassFilePath);
+
     }
 
     protected function getFixturesFilePath(string $fileName): string
@@ -49,5 +49,20 @@ abstract class AbstractCodeStyleTest extends TestCase
     protected function getRelativeFilePath(string $fileName): string
     {
         return 'tests/fixtures/temp/' . $fileName;
+    }
+
+    /**
+     * @param string|array $command
+     * @return array
+     */
+    protected function execCommand($command)
+    {
+        $output = [];
+
+        $command = is_array($command) ? implode(' ', $command) : $command;
+
+        exec($command, $output);
+
+        return $output;
     }
 }

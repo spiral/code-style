@@ -18,10 +18,10 @@ class NotFormattedClass
 
     public function setUp(): void
     {
-        $this->property = 'some string';
+        $this->property = "some string";
     }
 
-    public function testWrongFormattedClass(): void
+    public function testWrongFormattedClass()
     {
         $this->assertEquals();
     }
