@@ -9,7 +9,7 @@ class CodeStyleHelper
 {
     public const PACKAGE_NAME             = 'code-style';
     public const PHP_CS_CONFIG_FILE       = 'ruleset.xml';
-    public const PHP_CS_FIXER_CONFIG_FILE = '.php_cs';
+    public const PHP_CS_FIXER_CONFIG_FILE = '.php-cs-fixer.php';
 
 
     public static function init(string $rootDir): self
