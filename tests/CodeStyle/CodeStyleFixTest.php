@@ -14,10 +14,31 @@ class CodeStyleFixTest extends AbstractCodeStyleTest
 {
     public function testFix(): void
     {
-        exec('bin/spiral-cs fix ' . $this->getRelativeFilePath(self::NOT_FORMATTED_FILE_NAME));
+        $this->execCommand([
+            'bin/spiral-cs',
+            'fix',
+            $this->getRelativeFilePath(self::NOT_FORMATTED_FILE_NAME)
+        ]);
+
         $this->assertFileEquals(
-            $this->notFormattedClassFilePath,
-            $this->getFixturesFilePath(self::FORMATTED_FILE_NAME)
+            $this->getFixturesFilePath(self::FORMATTED_FILE_NAME),
+            $this->notFormattedClassFilePath
+        );
+    }
+
+    public function testFixWithAlternateConfig(): void
+    {
+        $this->execCommand([
+            'bin/spiral-cs',
+            'fix',
+            '--config',
+            $this->getFixturesFilePath('.php_cs_alternate'),
+            $this->getRelativeFilePath(self::NOT_FORMATTED_FILE_NAME)
+        ]);
+
+        $this->assertFileEquals(
+            $this->getFixturesFilePath('AlternateFormattedClass.php'),
+            $this->notFormattedClassFilePath
         );
     }
 }
