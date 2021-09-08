@@ -27,11 +27,23 @@ class CodeStyleCheckTest extends AbstractCodeStyleTest
 
     public function testWellFormattedClass(): void
     {
-
         $out = $this->execCommand([
             'bin/spiral-cs',
             'check',
             $this->getRelativeFilePath(self::FORMATTED_FILE_NAME)
+        ]);
+
+        $this->assertArrayHasKey(0, $out);
+        $this->assertEquals($out[0], 'No codestyle issues');
+    }
+
+    public function testIgnoredFilesShouldBeSkipped()
+    {
+        $out = $this->execCommand([
+            'bin/spiral-cs',
+            'check',
+            '--ignore=NotFormattedClass.php',
+            'tests/fixtures/temp/'
         ]);
 
         $this->assertArrayHasKey(0, $out);
