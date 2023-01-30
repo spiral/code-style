@@ -32,6 +32,10 @@ class CheckCommand extends Command
             '--standard=' . $input->getOption('ruleset'),
         ], $this->helper->wrapPaths($input->getArgument('paths')));
 
+        if ($input->hasOption('ignore')) {
+            $_SERVER['argv'][] = '--ignore=' . $input->getOption('ignore');
+        }
+
         $runner = new Runner();
         $exitCode = $runner->runPHPCS();
 
@@ -51,6 +55,12 @@ class CheckCommand extends Command
                 'paths',
                 InputArgument::IS_ARRAY | InputArgument::REQUIRED,
                 'Enumerate directories or files to check'
+            )
+            ->addOption(
+                'ignore',
+                'i',
+                InputArgument::OPTIONAL,
+                'A comma separated list of patterns to ignore files and directories'
             )
             ->addOption(
                 'ruleset',

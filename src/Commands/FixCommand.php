@@ -73,7 +73,7 @@ class FixCommand extends Command
             ->addArgument(
                 'paths',
                 InputArgument::IS_ARRAY | InputArgument::REQUIRED,
-                'Enumerate directories or files to check'
+                'Enumerate directories or files to fix'
             )
             ->addOption(
                 'config',
