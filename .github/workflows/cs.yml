@@ -7,4 +7,4 @@ name: Code Style
 
 jobs:
   cs-fix:
-    uses: spiral/gh-actions/.github/workflows/cs.yml@master
+    uses: spiral/gh-actions/.github/workflows/cs-fix.yml@master
