@@ -19,8 +19,7 @@ class Builder
     /** @var non-empty-string[] */
     private array $includeFiles = [];
 
-    private ?string $cacheFile = null;
-
+    private ?string $cacheFile = './runtime/php-cs-fixer.cache';
     private bool $allowRisky = true;
     private RulesInterface $rules;
 
@@ -61,9 +60,9 @@ class Builder
     /**
      * Define cache file
      *
-     * @param non-empty-string $path
+     * @param non-empty-string|null $path Set to {@see null} to use default value
      */
-    public function cache(string $path): self
+    public function cache(?string $path): self
     {
         $this->cacheFile = $path;
         return $this;

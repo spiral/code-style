@@ -50,9 +50,9 @@ final class DefaultRules implements RulesInterface
             ],
             'class_attributes_separation' => [
                 'elements' => [
-                    'const' => 'one',
+                    'const' => 'none',
                     'method' => 'one',
-                    'property' => 'one',
+                    'property' => 'none',
                     'trait_import' => 'none',
                     'case' => 'only_if_meta',
                 ],
@@ -144,7 +144,7 @@ final class DefaultRules implements RulesInterface
                 'const' => null,
                 'method' => 'multi',
                 'property' => null,
-            ]
+            ],
         ];
     }
 }
