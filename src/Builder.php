@@ -6,6 +6,7 @@ namespace Spiral\CodeStyle;
 
 use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
+use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
 use Spiral\CodeStyle\Rules\DefaultRules;
 
 class Builder
@@ -18,6 +19,9 @@ class Builder
 
     /** @var non-empty-string[] */
     private array $includeFiles = [];
+
+    /** @var non-empty-string[] */
+    private array $excludeFiles = [];
 
     private ?string $cacheFile = './runtime/php-cs-fixer.cache';
     private bool $allowRisky = true;
@@ -41,6 +45,7 @@ class Builder
      */
     public function include(string $path): self
     {
+        $path = \realpath($path) or throw new \InvalidArgumentException("File or directory not found: $path");
         \is_dir($path) and $this->includeDirs[] = $path;
         \is_file($path) and $this->includeFiles[] = $path;
         return $this;
@@ -53,7 +58,9 @@ class Builder
      */
     public function exclude(string $path): self
     {
-        $this->excludeDirs[] = $path;
+        $path = \realpath($path) or throw new \InvalidArgumentException("File or directory not found: $path");
+        \is_dir($path) and $this->excludeDirs[] = $path;
+        \is_file($path) and $this->excludeFiles[] = $path;
         return $this;
     }
 
@@ -83,6 +90,9 @@ class Builder
         $finder->in($this->includeDirs);
         $finder->exclude($this->excludeDirs);
         $finder->append($this->includeFiles);
+        $this->excludeFiles === [] or $finder->filter(
+            fn(\SplFileInfo $info) => !\in_array($info->getRealPath(), $this->excludeFiles, true),
+        );
 
         $config = new Config();
         $config->setFinder($finder);
@@ -90,6 +100,7 @@ class Builder
         $this->cacheFile === null or $config->setCacheFile($this->cacheFile);
 
         $config->setRules($this->rules->getRules());
+        $config->setParallelConfig(ParallelConfigFactory::detect());
 
         return $config;
     }

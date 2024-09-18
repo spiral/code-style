@@ -2,6 +2,14 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    paths-ignore:
+      - 'README.md'
+      - '.gitignore'
+      - '.gitattributes'
+      - '.editorconfig'
+      - 'psalm.xml'
+      - 'psalm-baseline.xml'
 
 name: phpunit
 

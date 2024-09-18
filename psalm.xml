@@ -10,8 +10,7 @@
     <issueHandlers>
         <RedundantConditionGivenDocblockType errorLevel="suppress"/>
         <RedundantCastGivenDocblockType errorLevel="suppress"/>
-        <PropertyNotSetInConstructor errorLevel="suppress"/>
-        <MissingConstructor errorLevel="suppress"/>
+        <RiskyTruthyFalsyComparison errorLevel="suppress"/>
     </issueHandlers>
     <projectFiles>
         <directory name="src"/>
