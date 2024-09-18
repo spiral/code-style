@@ -7,23 +7,4 @@ name: Code Style
 
 jobs:
   cs-fix:
-    timeout-minutes: 5
-    permissions:
-      contents: write
-    concurrency:
-      cancel-in-progress: true
-      group: coding-standards-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
     uses: spiral/gh-actions/.github/workflows/cs.yml@master
-    with:
-      os: >-
-        ['ubuntu-latest']
-      dry-run: false
-    steps:
-      - name: Commit and push changes
-        uses: stefanzweifel/git-auto-commit-action@v5.0.1
-        with:
-          commit_message: 'style(php-cs-fixer): fix coding standards'
-          branch: ${{ github.head_ref }}
-          commit_author: 'github-actions <github-actions@users.noreply.github.com>'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
