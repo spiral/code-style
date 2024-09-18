@@ -71,15 +71,15 @@ If you want GitHub Actions to automatically fix the found errors, add the follow
 
 ```yaml
 on:
-    push:
-        branches:
-            - '*'
+  push:
+    branches:
+      - '*'
 
 name: Fix Code Style
 
 jobs:
-    cs-fix:
-        permissions:
-            contents: write
-        uses: spiral/gh-actions/.github/workflows/cs-fix.yml@master
+  c[README.md](README.md)s-fix:
+    permissions:
+      contents: write
+    uses: spiral/gh-actions/.github/workflows/cs-fix.yml@master
 ```
