@@ -10,7 +10,7 @@ namespace Spiral\CodeStyle;
 interface RulesInterface
 {
     /**
-     * @return array<non-empty-string, mixed>
+     * @return array<non-empty-string, array<non-empty-string, mixed>|bool>
      */
     public function getRules(): array;
 }
