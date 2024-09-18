@@ -14,7 +14,7 @@
         <testsuite name="Unit">
             <directory>tests/Unit</directory>
         </testsuite>
-<!--        <testsuite name="Acceptance">-->
+        <testsuite name="Acceptance">
             <directory>tests/Acceptance</directory>
         </testsuite>
     </testsuites>
