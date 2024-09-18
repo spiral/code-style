@@ -3,7 +3,7 @@ on:
     branches:
       - '*'
 
-name: Code Style
+name: Fix Code Style
 
 jobs:
   cs-fix:
