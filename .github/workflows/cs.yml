@@ -1,0 +1,14 @@
+on:
+  push:
+    branches:
+      - '*'
+
+name: Code Style
+
+jobs:
+  psalm:
+    uses: spiral/gh-actions/.github/workflows/cs.yml@master
+    with:
+      os: >-
+        ['ubuntu-latest']
+      dry-run: false
