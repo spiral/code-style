@@ -21,7 +21,6 @@ class Builder
 
     private ?string $cacheFile = './runtime/php-cs-fixer.cache';
     private bool $allowRisky = true;
-
     private RulesInterface $rules;
 
     private function __construct(
