@@ -49,3 +49,37 @@ Now you can run the following commands:
 composer cs:diff
 composer cs:fix
 ```
+
+## CI integration
+
+If you want to integrate code style check into CI, add the following step to your GitHub Actions configuration file:
+
+```yaml
+on:
+  push:
+    branches:
+      - '*'
+
+name: Check Code Style
+
+jobs:
+  cs-fix:
+    uses: spiral/gh-actions/.github/workflows/cs.yml@master
+```
+
+If you want GitHub Actions to automatically fix the found errors, add the following step:
+
+```yaml
+on:
+    push:
+        branches:
+            - '*'
+
+name: Fix Code Style
+
+jobs:
+    cs-fix:
+        permissions:
+            contents: write
+        uses: spiral/gh-actions/.github/workflows/cs-fix.yml@master
+```
