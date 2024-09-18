@@ -1,26 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="tests/bootstrap.php"
-         backupGlobals="false"
-         backupStaticAttributes="false"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
          colors="true"
-         verbose="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="false"
-         stopOnError="false"
+         cacheResultFile="runtime/phpunit/result.cache"
+         failOnWarning="true"
+         failOnRisky="true"
+         executionOrder="random"
          stderr="true"
+         beStrictAboutOutputDuringTests="true"
 >
     <testsuites>
-        <testsuite name="Spiral Code-Style">
-            <directory>tests</directory>
+        <testsuite name="Unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Acceptance">
+            <directory>tests/Acceptance</directory>
         </testsuite>
     </testsuites>
-
-    <filter>
-        <whitelist>
-            <directory>./bin/</directory>
-        </whitelist>
-    </filter>
 </phpunit>
