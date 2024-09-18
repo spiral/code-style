@@ -88,7 +88,7 @@ final class DefaultRules implements RulesInterface
             ],
             'method_argument_space' => [
                 'on_multiline' => 'ensure_fully_multiline',
-                'attribute_placement' => 'same_line',
+                'attribute_placement' => 'ignore',
                 'after_heredoc' => true,  // @PHP73Migration
             ],
 
