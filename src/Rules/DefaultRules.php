@@ -12,7 +12,7 @@ use Spiral\CodeStyle\RulesInterface;
  */
 final class DefaultRules implements RulesInterface
 {
-    public function getRules(): array
+    public function getRules(bool $risky): array
     {
         return [
             /*
@@ -63,18 +63,6 @@ final class DefaultRules implements RulesInterface
             'no_unused_imports' => true,
 
             /*
-             * @Symfony:risky
-             */
-            'native_function_invocation' => [
-                'include' => [
-                    NativeFunctionInvocationFixer::SET_INTERNAL,
-                    NativeFunctionInvocationFixer::SET_COMPILER_OPTIMIZED,
-                ],
-                'scope' => 'all',
-                'strict' => true,
-            ],
-
-            /*
              * @PER-CS2.0 overrides
              */
             'ordered_class_elements' => [
@@ -117,24 +105,12 @@ final class DefaultRules implements RulesInterface
             'no_useless_else' => true,
 
             /*
-             * @PhpCsFixer:risky
-             */
-            'static_lambda' => true,
-
-            /*
              * @PHP**MigrationSet
              */
             'list_syntax' => [
                 'syntax' => 'short',
             ],
             'ternary_to_null_coalescing' => true,
-
-            /*
-             * @PHP**MigrationSet:risky
-             */
-            'random_api_migration' => true,
-            'declare_strict_types' => true,
-            'void_return' => true,
 
             /*
              * Rules without presets
@@ -148,6 +124,30 @@ final class DefaultRules implements RulesInterface
                 'method' => 'multi',
                 'property' => null,
             ],
-        ];
+        ] + ($risky ? [
+            /*
+             * @Symfony:risky
+             */
+            'native_function_invocation' => [
+                'include' => [
+                    NativeFunctionInvocationFixer::SET_INTERNAL,
+                    NativeFunctionInvocationFixer::SET_COMPILER_OPTIMIZED,
+                ],
+                'scope' => 'all',
+                'strict' => true,
+            ],
+
+            /*
+             * @PhpCsFixer:risky
+             */
+            'static_lambda' => true,
+
+            /*
+             * @PHP**MigrationSet:risky
+             */
+            'random_api_migration' => true,
+            'declare_strict_types' => true,
+            'void_return' => true,
+        ] : []);
     }
 }

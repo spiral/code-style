@@ -99,7 +99,7 @@ class Builder
         $config->setRiskyAllowed($this->allowRisky);
         $this->cacheFile === null or $config->setCacheFile($this->cacheFile);
 
-        $config->setRules($this->rules->getRules());
+        $config->setRules($this->rules->getRules($this->allowRisky));
         $config->setParallelConfig(ParallelConfigFactory::detect());
 
         return $config;
