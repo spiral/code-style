@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Spiral\CodeStyle\Tests\Unit;
+
 use PhpCsFixer\Config;
 use PHPUnit\Framework\TestCase;
 use Spiral\CodeStyle\Builder;
