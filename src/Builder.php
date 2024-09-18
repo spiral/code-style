@@ -100,6 +100,7 @@ class Builder
         $this->cacheFile === null or $config->setCacheFile($this->cacheFile);
 
         $config->setRules($this->rules->getRules());
+        $config->setParallelConfig(ParallelConfigFactory::detect());
 
         return $config;
     }
