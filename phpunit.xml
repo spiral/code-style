@@ -18,4 +18,22 @@
             <directory>tests/Acceptance</directory>
         </testsuite>
     </testsuites>
+    <source>
+        <include>
+            <directory>src</directory>
+        </include>
+        <exclude>
+            <directory>tests</directory>
+        </exclude>
+    </source>
+    <coverage>
+        <report>
+            <html outputDirectory="runtime/phpunit/coverage"/>
+            <text outputFile="runtime/phpunit/coverage.txt"/>
+            <clover outputFile="runtime/phpunit/logs/clover.xml"/>
+        </report>
+    </coverage>
+    <logging>
+        <junit outputFile="runtime/phpunit/report.junit.xml"/>
+    </logging>
 </phpunit>
