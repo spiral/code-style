@@ -7,6 +7,9 @@ namespace Spiral\CodeStyle\Rules;
 use PhpCsFixer\Fixer\FunctionNotation\NativeFunctionInvocationFixer;
 use Spiral\CodeStyle\RulesInterface;
 
+/**
+ * @internal might be changed in the future
+ */
 final class DefaultRules implements RulesInterface
 {
     public function getRules(): array
