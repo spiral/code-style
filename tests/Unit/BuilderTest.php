@@ -45,4 +45,18 @@ final class BuilderTest extends TestCase
 
         self::assertTrue($config->getRiskyAllowed());
     }
+
+    public function testIncludeNonExistingPath(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        Builder::create()->include('./non/existing/path');
+    }
+
+    public function testExcludeNonExistingPath(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        Builder::create()->exclude('./non/existing/path');
+    }
 }
