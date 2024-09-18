@@ -1,37 +1,51 @@
-# Codestyle presets for Spiral components
-[![Latest Stable Version](https://poser.pugx.org/spiral/code-style/version)](https://packagist.org/packages/spiral/code-style)
-[![Build Status](https://travis-ci.org/spiral/code-style.svg?branch=master)](https://travis-ci.org/spiral/code-style)
-[![Codecov](https://codecov.io/gh/spiral/code-style/branch/master/graph/badge.svg)](https://codecov.io/gh/spiral/code-style/)
+# Code style presets for Spiral components
 
-This repository contains ruleset for static analyses tools.
-Currently supported:
-- [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer/)
-- [PHP CS Fixer](https://cs.symfony.com/)
+This repository contains ruleset for [PHP CS Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer) based on PER-2.
 
-Current codestyle is PSR-12.
+## Installation and configuration
 
-PHP Codesniffer ruleset is located in `config/ruleset.xml`.
-
-PHP CS Fixer ruleset is located in `config/.php_cs`
-
-To apply it in your project do the following: 
-
-#### Install the package
+Install the package via composer:
 
 ```
 composer require --dev spiral/code-style
-``` 
-
-#### Check the code
 ```
 
-#vendor/bin/spiral-cs check <dir1> <dir2> <file1>....
-vendor/bin/spiral-cs check src tests
+[![PHP](https://img.shields.io/packagist/php-v/spiral/code-style.svg?style=flat-square&logo=php)](https://packagist.org/packages/spiral/code-style)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/spiral/code-style.svg?style=flat-square&logo=packagist)](https://packagist.org/packages/spiral/code-style)
+[![License](https://img.shields.io/packagist/l/spiral/code-style.svg?style=flat-square)](LICENSE.md)
+[![Total Downloads](https://img.shields.io/packagist/dt/spiral/code-style.svg?style=flat-square)](https://packagist.org/packages/spiral/code-style)
+
+Create a configuration file `.php-cs-fixer.dist.php` in the root of your project:
+
+```php
+<?php declare(strict_types=1);
+
+require_once 'vendor/autoload.php';
+
+return \Spiral\CodeStyle\Builder::create()
+    ->include(__DIR__ . '/src')
+    ->include(__FILE__)
+    ->build();
 ```
 
-#### Automatically fix the code style
+Feel free to adjust the paths to include/exclude files and directories.
 
+## Usage
+
+To more convenient usage, you can add the following commands to the `scripts` section of the `composer.json` file:
+
+```json
+{
+    "scripts": {
+        "cs:diff": "php-cs-fixer fix --dry-run -v --diff",
+        "cs:fix": "php-cs-fixer fix -v"
+    }
+}
 ```
-#vendor/bin/spiral-cs fix <dir1> <dir2> <file1>....
-vendor/bin/spiral-cs fix src tests
+
+Now you can run the following commands:
+
+```bash
+composer cs:diff
+composer cs:fix
 ```
