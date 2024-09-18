@@ -63,7 +63,7 @@ on:
 name: Check Code Style
 
 jobs:
-  cs-fix:
+  cs-check:
     uses: spiral/gh-actions/.github/workflows/cs.yml@master
 ```
 
@@ -78,7 +78,7 @@ on:
 name: Fix Code Style
 
 jobs:
-  c[README.md](README.md)s-fix:
+  cs-fix:
     permissions:
       contents: write
     uses: spiral/gh-actions/.github/workflows/cs-fix.yml@master
