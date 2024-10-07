@@ -103,6 +103,10 @@ final class DefaultRules implements RulesInterface
             'multiline_comment_opening_closing' => true,
             'self_static_accessor' => true,
             'no_useless_else' => true,
+            'no_superfluous_phpdoc_tags' => [
+                'allow_mixed' => true,
+                'remove_inheritdoc' => true,
+            ],
 
             /*
              * @PHP**MigrationSet
