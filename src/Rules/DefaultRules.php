@@ -117,6 +117,7 @@ final class DefaultRules implements RulesInterface
                 'syntax' => 'short',
             ],
             'ternary_to_null_coalescing' => true,
+            'nullable_type_declaration_for_default_null_value' => true, // @PHP84Migration
 
             /*
              * Rules without presets
