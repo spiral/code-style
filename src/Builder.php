@@ -23,7 +23,9 @@ class Builder
     /** @var non-empty-string[] */
     private array $excludeFiles = [];
 
+    /** @var non-empty-string|null */
     private ?string $cacheFile = './runtime/php-cs-fixer.cache';
+
     private bool $allowRisky = true;
     private RulesInterface $rules;
 
