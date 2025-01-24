@@ -54,15 +54,15 @@ class Builder
     }
 
     /**
-     * Exclude directory from scan
+     * Exclude a directory or a file from scan
      *
      * @param non-empty-string $path
      */
     public function exclude(string $path): self
     {
-        $path = \realpath($path) or throw new \InvalidArgumentException("File or directory not found: $path");
-        \is_dir($path) and $this->excludeDirs[] = $path;
-        \is_file($path) and $this->excludeFiles[] = $path;
+        $realPath = \realpath($path) or throw new \InvalidArgumentException("File or directory `$path` not found.");
+        \is_dir($realPath) and $this->excludeDirs[] = $realPath;
+        \is_file($realPath) and $this->excludeFiles[] = $realPath;
         return $this;
     }
 
@@ -90,10 +90,37 @@ class Builder
     {
         $finder = (new Finder());
         $finder->in($this->includeDirs);
-        $finder->exclude($this->excludeDirs);
         $finder->append($this->includeFiles);
-        $this->excludeFiles === [] or $finder->filter(
-            fn(\SplFileInfo $info) => !\in_array($info->getRealPath(), $this->excludeFiles, true),
+        /** @var object{dir: non-empty-string|null, white: bool} */
+        $lastDir = (object) ['dir' => null, 'white' => false];
+
+        $this->excludeDirs !== [] || $this->excludeFiles !== [] and $finder->filter(
+            function (\SplFileInfo $file) use ($lastDir): bool {
+                // Concrete files excluded by the user
+                if ($file->isFile() && \in_array($file->getRealPath(), $this->excludeFiles, true)) {
+                    return false;
+                }
+
+                // Directories excluded by the user
+                $initDir = $file->isDir() ? $file->getRealPath() : \dirname($file->getRealPath());
+                if ($lastDir->dir === $initDir) {
+                    return $lastDir->white;
+                }
+
+                $dir = $initDir;
+                while (!\in_array($dir, $this->includeDirs, true)) {
+                    if (\in_array($dir, $this->excludeDirs, true)) {
+                        $lastDir->dir = $initDir;
+                        $lastDir->white = false;
+                        return false;
+                    }
+
+                    $dir = \dirname($dir);
+                }
+
+                $lastDir->dir = $initDir;
+                return $lastDir->white = true;
+            },
         );
 
         $config = new Config();
