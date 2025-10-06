@@ -20,7 +20,7 @@ final class DefaultRules implements RulesInterface
              * https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/blob/master/doc/ruleSets/PER-CS2.0.rst
              * https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/blob/master/src/RuleSet/Sets/PERCS2x0Set.php
              */
-            '@PER-CS2.0' => true,
+            '@PER-CS2x0' => true,
 
             /*
              * @PER-CS2.0 Overrides
