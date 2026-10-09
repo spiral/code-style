@@ -8,6 +8,7 @@ tests                  export-ignore
 .php-cs-fixer.dist.php export-ignore
 psalm-autoload.php     export-ignore
 testo.php              export-ignore
+infection.json5        export-ignore
 composer.lock          export-ignore
 composer-require-*     export-ignore
 Makefile               export-ignore

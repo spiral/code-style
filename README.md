@@ -14,6 +14,7 @@ composer require --dev spiral/code-style
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spiral/code-style.svg?style=flat-square&logo=packagist)](https://packagist.org/packages/spiral/code-style)
 [![License](https://img.shields.io/packagist/l/spiral/code-style.svg?style=flat-square)](LICENSE.md)
 [![Total Downloads](https://img.shields.io/packagist/dt/spiral/code-style.svg?style=flat-square)](https://packagist.org/packages/spiral/code-style)
+[![Mutation testing badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fspiral%2Fcode-style%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/spiral/code-style/master)
 
 Create a configuration file `.php-cs-fixer.dist.php` in the root of your project:
 
