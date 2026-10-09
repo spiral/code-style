@@ -62,7 +62,9 @@ class Builder
      */
     public function exclude(string $path): self
     {
-        $realPath = \realpath($path) or throw new \InvalidArgumentException("File or directory `$path` not found.");
+        /** @var non-empty-string|false $realPath */
+        $realPath = \realpath($path);
+        $realPath === false and throw new \InvalidArgumentException("File or directory `$path` not found.");
         \is_dir($realPath) and $this->excludeDirs[] = $realPath;
         \is_file($realPath) and $this->excludeFiles[] = $realPath;
         return $this;
