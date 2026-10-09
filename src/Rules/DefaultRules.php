@@ -61,10 +61,18 @@ final class DefaultRules implements RulesInterface
                 ],
             ],
             'no_unused_imports' => true,
+            'fully_qualified_strict_types' => [
+                // The default drops the leading backslash in the global namespace, e.g. in `.php-cs-fixer.dist.php`.
+                'leading_backslash_in_global_namespace' => true,
+            ],
 
             /*
              * @PER-CS2.0 overrides
              */
+            'ordered_imports' => [
+                'imports_order' => ['class', 'function', 'const'],
+                'sort_algorithm' => 'alpha',
+            ],
             'ordered_class_elements' => [
                 'sort_algorithm' => 'none',
                 'order' => [

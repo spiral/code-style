@@ -47,4 +47,29 @@ final class StyleTest extends TestCase
             )),
         ));
     }
+
+    public function testUnstyledIsFixedToStyled(): void
+    {
+        $dir = \sys_get_temp_dir() . '/spiral-code-style-' . \uniqid();
+        \mkdir($dir);
+        $file = $dir . '/Imports.php';
+        \copy(__DIR__ . '/Stub/Unstyled/Imports.php', $file);
+
+        try {
+            $command = "php vendor/bin/php-cs-fixer fix --using-cache=no $file";
+            \exec($command, $output, $status);
+
+            $status === 0 or $this->fail(\sprintf(
+                "php-cs-fixer failed: %s. \n  %s\n\n%s",
+                $status,
+                \implode('\n  ', $this->describeFailCommand($status)),
+                \implode("\n", $output),
+            ));
+
+            self::assertStringEqualsFile(__DIR__ . '/Stub/Styled/Imports.php', \file_get_contents($file));
+        } finally {
+            \unlink($file);
+            \rmdir($dir);
+        }
+    }
 }
