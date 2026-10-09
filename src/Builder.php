@@ -47,9 +47,11 @@ class Builder
      */
     public function include(string $path): self
     {
-        $path = \realpath($path) or throw new \InvalidArgumentException("File or directory not found: $path");
-        \is_dir($path) and $this->includeDirs[] = $path;
-        \is_file($path) and $this->includeFiles[] = $path;
+        /** @var non-empty-string|false $realPath */
+        $realPath = \realpath($path);
+        $realPath === false and throw new \InvalidArgumentException("File or directory not found: $path");
+        \is_dir($realPath) and $this->includeDirs[] = $realPath;
+        \is_file($realPath) and $this->includeFiles[] = $realPath;
         return $this;
     }
 
