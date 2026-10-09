@@ -1,0 +1,21 @@
+{
+    "$schema": "https://raw.githubusercontent.com/infection/infection/master/resources/schema.json",
+    "source": {
+        "directories": ["src"],
+        // The rule set is configuration data: a mutated rule only changes the style, and pinning every rule in a
+        // unit test would just duplicate the list
+        "excludes": ["Rules/DefaultRules.php"]
+    },
+    "testFramework": "testo",
+    // Acceptance tests run php-cs-fixer in a subprocess: they add no coverage, so they can't kill a mutant
+    "testFrameworkOptions": "--suite=Unit",
+    "tmpDir": "runtime",
+    "timeout": 10,
+    "logs": {
+        "text": "runtime/infection.log",
+        "github": true,
+        "stryker": {
+            "report": "master"
+        }
+    }
+}
