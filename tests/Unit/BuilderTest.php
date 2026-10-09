@@ -8,6 +8,7 @@ use PhpCsFixer\Config;
 use Spiral\CodeStyle\Builder;
 use Testo\Assert;
 use Testo\Assert\ExpectException;
+use Testo\Expect;
 use Testo\Test;
 
 #[Test]
@@ -52,6 +53,14 @@ final class BuilderTest
     #[ExpectException(\InvalidArgumentException::class)]
     public function testIncludeNonExistingPath(): void
     {
+        Builder::create()->include('./non/existing/path');
+    }
+
+    public function testIncludeNonExistingPathReportsPath(): void
+    {
+        Expect::exception(\InvalidArgumentException::class)
+            ->withMessage('File or directory not found: ./non/existing/path');
+
         Builder::create()->include('./non/existing/path');
     }
 
