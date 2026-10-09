@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Spiral\CodeStyle\Tests\Acceptance;
 
-abstract class TestCase extends \PHPUnit\Framework\TestCase
+abstract class TestCase
 {
     private const CS_STATUSES = [
         1 => 'General error (or PHP minimal requirement not matched).',

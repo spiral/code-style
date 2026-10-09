@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace Spiral\CodeStyle\Tests\Unit;
 
 use PhpCsFixer\Config;
-use PHPUnit\Framework\TestCase;
 use Spiral\CodeStyle\Builder;
+use Testo\Assert;
+use Testo\Assert\ExpectException;
+use Testo\Test;
 
-final class BuilderTest extends TestCase
+#[Test]
+final class BuilderTest
 {
     public function testBuilderCreatesConfig(): void
     {
@@ -17,7 +20,7 @@ final class BuilderTest extends TestCase
             ->include(__FILE__)
             ->build();
 
-        self::assertInstanceOf(Config::class, $config);
+        Assert::instanceOf($config, Config::class);
     }
 
     public function testConfigureCacheFile(): void
@@ -29,34 +32,32 @@ final class BuilderTest extends TestCase
             ->cache($newFile)
             ->build();
 
-        self::assertSame($newFile, $config->getCacheFile());
+        Assert::same($config->getCacheFile(), $newFile);
     }
 
     public function testRiskyMode(): void
     {
         $config = Builder::create()->include(__DIR__)->allowRisky(false)->build();
 
-        self::assertFalse($config->getRiskyAllowed());
+        Assert::false($config->getRiskyAllowed());
     }
 
     public function testRiskyModeDefault(): void
     {
         $config = Builder::create()->include(__DIR__)->build();
 
-        self::assertTrue($config->getRiskyAllowed());
+        Assert::true($config->getRiskyAllowed());
     }
 
+    #[ExpectException(\InvalidArgumentException::class)]
     public function testIncludeNonExistingPath(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
-
         Builder::create()->include('./non/existing/path');
     }
 
+    #[ExpectException(\InvalidArgumentException::class)]
     public function testExcludeNonExistingPath(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
-
         Builder::create()->exclude('./non/existing/path');
     }
 }

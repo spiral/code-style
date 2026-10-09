@@ -4,16 +4,20 @@ declare(strict_types=1);
 
 namespace Spiral\CodeStyle\Tests\Acceptance;
 
+use Testo\Assert;
+use Testo\Test;
+
+#[Test]
 final class StyleTest extends TestCase
 {
     public function testStyled(): void
     {
         $dir = \realpath(__DIR__ . '/Stub/Styled');
-        $command = "php vendor/bin/php-cs-fixer fix --dry-run --diff --format=json $dir";
+        $command = "php vendor/bin/php-cs-fixer fix --allow-unsupported-php-version=yes --dry-run --diff --format=json $dir";
 
         \exec($command, $output, $status);
 
-        \in_array($status, [0, 8]) or $this->fail(\sprintf(
+        \in_array($status, [0, 8]) or Assert::fail(\sprintf(
             "php-cs-fixer failed: %s. \n  %s\n\n%s",
             $status,
             \implode('\n  ', $this->describeFailCommand($status)),
@@ -35,11 +39,11 @@ final class StyleTest extends TestCase
 
         // No files to fix
         if ($result['files'] === []) {
-            $this->assertTrue(true);
+            Assert::true(true);
             return;
         }
 
-        $this->fail(\sprintf(
+        Assert::fail(\sprintf(
             "Some nominal stub files were changed: \n\n%s",
             \implode("\n", \array_map(
                 static fn(array $file) => $file['diff'],
@@ -56,17 +60,17 @@ final class StyleTest extends TestCase
         \copy(__DIR__ . '/Stub/Unstyled/Imports.php', $file);
 
         try {
-            $command = "php vendor/bin/php-cs-fixer fix --using-cache=no $file";
+            $command = "php vendor/bin/php-cs-fixer fix --allow-unsupported-php-version=yes --using-cache=no $file";
             \exec($command, $output, $status);
 
-            $status === 0 or $this->fail(\sprintf(
+            $status === 0 or Assert::fail(\sprintf(
                 "php-cs-fixer failed: %s. \n  %s\n\n%s",
                 $status,
                 \implode('\n  ', $this->describeFailCommand($status)),
                 \implode("\n", $output),
             ));
 
-            self::assertStringEqualsFile(__DIR__ . '/Stub/Styled/Imports.php', \file_get_contents($file));
+            Assert::same(\file_get_contents($file), \file_get_contents(__DIR__ . '/Stub/Styled/Imports.php'));
         } finally {
             \unlink($file);
             \rmdir($dir);
