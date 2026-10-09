@@ -6,6 +6,7 @@
        findUnusedBaselineEntry="false"
        findUnusedCode="false"
        errorBaseline="psalm-baseline.xml"
+       autoloader="psalm-autoload.php"
 >
     <issueHandlers>
         <MissingClassConstType errorLevel="suppress"/>

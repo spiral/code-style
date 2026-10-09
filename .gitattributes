@@ -6,6 +6,7 @@ tests                  export-ignore
 *.xml                  export-ignore
 *.xml.dist             export-ignore
 .php-cs-fixer.dist.php export-ignore
+psalm-autoload.php     export-ignore
 composer.lock          export-ignore
 composer-require-*     export-ignore
 Makefile               export-ignore
