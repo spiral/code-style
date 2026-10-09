@@ -4,16 +4,14 @@ on:
     branches:
       - master
 
-name: phpunit
+name: testo
 
 permissions:
   contents: read
 
 jobs:
-  phpunit:
-    uses: spiral/gh-actions/.github/workflows/phpunit.yml@master
+  testo:
+    uses: spiral/gh-actions/.github/workflows/testo.yml@master
     with:
       os: >-
         ['ubuntu-latest']
-      stability: >-
-        ['prefer-stable']
