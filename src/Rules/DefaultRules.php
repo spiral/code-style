@@ -12,6 +12,7 @@ use Spiral\CodeStyle\RulesInterface;
  */
 final class DefaultRules implements RulesInterface
 {
+    #[\Override]
     public function getRules(bool $risky): array
     {
         return [

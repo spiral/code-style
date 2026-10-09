@@ -9,10 +9,8 @@
        autoloader="psalm-autoload.php"
 >
     <issueHandlers>
-        <MissingClassConstType errorLevel="suppress"/>
-        <RedundantConditionGivenDocblockType errorLevel="suppress"/>
-        <RedundantCastGivenDocblockType errorLevel="suppress"/>
-        <RiskyTruthyFalsyComparison errorLevel="suppress"/>
+        <!-- Builder is public API: making it final would break projects that extend it -->
+        <ClassMustBeFinal errorLevel="suppress"/>
     </issueHandlers>
     <projectFiles>
         <directory name="src"/>
